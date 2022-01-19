@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 import {useTypingTest} from '../../context/typing-test.context';
 import TextReference from '../text-reference';
 import TextInput from '../text-input';
@@ -7,11 +7,8 @@ import {
   FINISH_TEST,
   UPDATE_CLOCK,
   UPDATE_CURRENT_POSITION,
+  CHECK_ACCURACY,
 } from '../../reducers/typing-test.reducer';
-
-const parseParagraph = (paragraph) => {
-  return paragraph.split(' ');
-};
 
 const parseClockDigit = (digit) => {
   return `${digit}`.length > 1 ? `${digit}` : `0${digit}`;
@@ -21,6 +18,11 @@ const handleOnChange = ([text, textArray], dispatch) => {
   const length = textArray.length;
   const currentWord = length - 1;
   const currentLetter = textArray[length - 1].length - 1;
+
+  dispatch({
+    type: CHECK_ACCURACY,
+    payload: {textArray: textArray},
+  });
 
   dispatch({
     type: UPDATE_CURRENT_POSITION,
@@ -36,14 +38,13 @@ const TypingTest = (props) => {
 
   const {
     status,
-    paragraph,
     startTime,
     durationMilliseconds,
     clock,
     currentPositions,
+    paragraphMap,
+    accurancyByPosition,
   } = state;
-
-  const paragraphArray = useMemo(() => parseParagraph(paragraph), [paragraph]);
 
   const isFinished = () => {
     return status === STATUSES.FINISHED;
@@ -82,7 +83,8 @@ const TypingTest = (props) => {
       <div className="typing-test">
         <span className="countdown">{clock}</span>
         <TextReference
-          paragraph={paragraphArray}
+          accurancyByPosition={accurancyByPosition}
+          paragraph={paragraphMap}
           currentPositions={currentPositions}
         />
         <TextInput

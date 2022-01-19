@@ -10,6 +10,7 @@ const TextInput = (props) => {
   return (
     <>
       <input
+        min="1"
         onChange={
           (event) => handleOnChange(event.target.value)
         }

@@ -1,0 +1,63 @@
+/* SCSS HSL */
+$black-coral: hsla(224, 8%, 36%, 1);
+$electric-blue: hsla(185, 100%, 49%, 1);
+$outrageous-orange: hsla(13, 94%, 63%, 1);
+$maize-crayola: hsla(44, 94%, 63%, 1);
+$misty-rose: hsla(0, 100%, 95%, 1);
+
+:root {
+  --black-coral: #{$black-coral};
+  --electric-blue: #{$electric-blue};
+  --outrageous-orange: #{$outrageous-orange};
+  --outrageous-orange-darken-5: #{darken($outrageous-orange, 10%)};
+  --outrageous-orange-darken-20: #{darken($outrageous-orange, 20%)};
+  --maize-crayola: #{$maize-crayola};
+  --misty-rose: #{$misty-rose};
+}
+
+body {
+  background-color: var(--misty-rose);
+  color: var(--black-coral);
+  width: fit-content;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+.custom-input {
+  &_label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    & > * {
+      margin: 0 0.2em;
+    }
+    input {
+      width: 4em;
+    }
+  }
+}
+
+.custom-button {
+  &_submit {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #fff;
+    background-color: var(--outrageous-orange);
+    border: solid var(--outrageous-orange);
+    justify-content: center;
+    &:hover {
+      background-color: var(--outrageous-orange-darken-5);
+      border-color: var(--outrageous-orange-darken-5);
+    }
+    & > span {
+      text-transform: uppercase;
+      padding: 0 0.5em;
+    }
+  }
+}

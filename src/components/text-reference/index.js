@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
 import WordBox from './components/word-box';
 
-const renderParagraph = (paragraph, wordIndex, letterIndex) => {
+const renderParagraph = (
+    paragraph,
+    wordIndex,
+    letterIndex,
+    accurancyByPosition,
+) => {
   return paragraph.map((word, index) => {
     return (
       <WordBox
@@ -9,6 +14,7 @@ const renderParagraph = (paragraph, wordIndex, letterIndex) => {
         index={index}
         currentWordIndex={wordIndex}
         currentLetterIndex={letterIndex}
+        correct={accurancyByPosition[index]}
       >
         {word}
       </WordBox>);
@@ -16,7 +22,7 @@ const renderParagraph = (paragraph, wordIndex, letterIndex) => {
 };
 
 const TextReference = (props) => {
-  const {paragraph} = props;
+  const {paragraph, accurancyByPosition} = props;
 
   return (
     <>
@@ -24,7 +30,9 @@ const TextReference = (props) => {
         renderParagraph(
             paragraph,
             props?.currentPositions?.word,
-            props?.currentPositions?.letter)
+            props?.currentPositions?.letter,
+            accurancyByPosition,
+        )
       }
     </>
   );
@@ -32,6 +40,7 @@ const TextReference = (props) => {
 
 TextReference.propTypes = {
   paragraph: PropTypes.arrayOf(PropTypes.string).isRequired,
+  accurancyByPosition: PropTypes.arrayOf(PropTypes.bool).isRequired,
   currentPositions: PropTypes.shape({
     word: PropTypes.number,
     letter: PropTypes.number,

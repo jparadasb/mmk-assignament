@@ -1,7 +1,8 @@
 import {TypingTestProvider} from './context/typing-test.context';
 import ConfigForm from './components/config-form';
 import TypingTest from './components/typing-test';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import './App.scss';
 
 
 function App() {
