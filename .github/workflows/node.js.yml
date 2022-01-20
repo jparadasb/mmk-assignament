@@ -6,7 +6,7 @@ name: Cypress Tests with installation job
 on: [push]
 
 jobs:
-  install:
+  build-test-and-deploy:
     runs-on: ubuntu-latest
     container:
       image: cypress/browsers:node16.13.0-chrome95-ff94
@@ -24,13 +24,13 @@ jobs:
           if-no-files-found: error
           path: build
 
-      # - name: Cypress install
-      #   uses: cypress-io/github-action@v2
-      #   with:
-      #     runTests: false
-      #     build: yarn build
-
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
           start: yarn serve:build
+
+      - name: Deploy 🚀
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./build
