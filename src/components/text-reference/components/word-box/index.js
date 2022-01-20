@@ -9,6 +9,24 @@ const getStatusClass = (correct) => {
   return '';
 };
 
+const getPositionClass = (currentWordIndex, index) => {
+  const distance = index - currentWordIndex;
+
+  if (distance < -2) {
+    return 'typing_hide';
+  }
+
+  if (distance > -6 && distance < 0) {
+    return 'typing_blury';
+  }
+
+  if (distance < 10) {
+    return 'typing_show';
+  }
+
+  return 'typing_hide';
+};
+
 const WordBox = ({
   index,
   currentWordIndex,
@@ -16,6 +34,13 @@ const WordBox = ({
   children,
   correct,
 }) => {
+  const getClasses = () => {
+    return [
+      getStatusClass(correct),
+      getPositionClass(currentWordIndex, index),
+      'noselect',
+    ].join(' ');
+  };
   if (index === currentWordIndex) {
     const letters = children.split('');
     const letterBoxes = letters.map((letter, i) => {
@@ -32,7 +57,12 @@ const WordBox = ({
     return <b className="word-active">{letterBoxes}&nbsp;</b>;
   };
 
-  return <span className={getStatusClass(correct)}>{children}&nbsp;</span>;
+  return (
+    <span
+      className={getClasses()}>
+      {children}&nbsp;
+    </span>
+  );
 };
 
 WordBox.propTypes = {

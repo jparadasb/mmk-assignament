@@ -6,6 +6,8 @@ export const FINISH_TEST = 'FINISH_TEST';
 export const UPDATE_CLOCK = 'UPDATE_CLOCK';
 export const UPDATE_CURRENT_POSITION = 'UPDATE_CURRENT_POSITION';
 export const CHECK_ACCURACY = 'CHECK_ACCURACY';
+export const UPDATE_SCORE = 'UPDATE_SCORE';
+export const RESTART = 'RESTART';
 
 export const STATUSES = {
   STARTED: 'STARTED',
@@ -13,7 +15,21 @@ export const STATUSES = {
   FINISHED: 'FINISHED',
 };
 
+export const defaultState = {
+  status: STATUSES.SETTING,
+  durationMinutes: null,
+  durationMilliseconds: null,
+  paragraph: '',
+  startTime: null,
+  clock: '00:00',
+  currentPositions: {
+    word: 0,
+    letter: 0,
+  },
+};
+
 const MAX_TYPED_WORD_PER_MINUTE = 216;
+
 
 const initializeConfig = (durationMinutes) => {
   const paragraphText = paragraph(durationMinutes * MAX_TYPED_WORD_PER_MINUTE);
@@ -35,6 +51,23 @@ const initializeConfig = (durationMinutes) => {
 
 export default function typingTestReducer(state, action) {
   switch (action.type) {
+    case RESTART: {
+      return defaultState;
+    }
+    case UPDATE_SCORE: {
+      const {accurancyByPosition} = state;
+      const score = accurancyByPosition.reduce(
+          (total, isValid) => {
+            if (isValid) {
+              return total + 1;
+            }
+            return total;
+          },
+          0,
+      );
+
+      return {...state, score};
+    }
     case CHECK_ACCURACY: {
       const {paragraphMap} = state;
       const {textArray} = action.payload;

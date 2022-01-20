@@ -1,0 +1,14 @@
+.score {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--misty-rose-20);
+  padding: 2em;
+  top: 10%;
+  border-radius: 20px;
+  &_text {
+    font-size: 10rem;
+  }
+}

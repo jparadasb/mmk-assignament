@@ -17,7 +17,8 @@ const renderParagraph = (
         correct={accurancyByPosition[index]}
       >
         {word}
-      </WordBox>);
+      </WordBox>
+    );
   });
 };
 
@@ -25,7 +26,7 @@ const TextReference = (props) => {
   const {paragraph, accurancyByPosition} = props;
 
   return (
-    <>
+    <div className="text-reference_container">
       {
         renderParagraph(
             paragraph,
@@ -34,7 +35,7 @@ const TextReference = (props) => {
             accurancyByPosition,
         )
       }
-    </>
+    </div>
   );
 };
 

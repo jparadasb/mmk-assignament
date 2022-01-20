@@ -1,0 +1,52 @@
+.typing-test {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  input {
+    width: 100%;
+    font-size: 4em;
+  }
+}
+
+.typing_hide {
+  display: none;
+}
+
+.typing_blury {
+  color: transparent;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.correct {
+  color: var(--correct-answer-green);
+}
+
+.errored {
+  color: var(--outrageous-orange-darken-20);
+}
+
+.countdown {
+  font-size: 8rem;
+}
+
+.word-active {
+  font-size: 4rem;
+}
+
+.text-reference {
+  &_container {
+    font-size: 2rem;
+  }
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}

@@ -1,6 +1,8 @@
 import {createContext, useContext, useReducer} from 'react';
 import PropTypes from 'prop-types';
-import typingTestReducer, {STATUSES} from '../reducers/typing-test.reducer';
+import typingTestReducer, {
+  defaultState,
+} from '../reducers/typing-test.reducer';
 
 const TypingTestContext = createContext();
 
@@ -25,18 +27,7 @@ TypingTestConsumer.propTypes = {
 };
 
 function TypingTestProvider({children}) {
-  const [state, dispatch] = useReducer(typingTestReducer, {
-    status: STATUSES.SETTING,
-    durationMinutes: null,
-    durationMilliseconds: null,
-    paragraph: '',
-    startTime: null,
-    clock: '00:00',
-    currentPositions: {
-      word: 0,
-      letter: 0,
-    },
-  });
+  const [state, dispatch] = useReducer(typingTestReducer, defaultState);
   const value = {state, dispatch};
   return (
     <TypingTestContext.Provider

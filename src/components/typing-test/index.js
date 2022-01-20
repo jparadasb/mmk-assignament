@@ -1,14 +1,19 @@
 import React, {useEffect} from 'react';
+import {Container, Row, Col} from 'react-bootstrap';
 import {useTypingTest} from '../../context/typing-test.context';
 import TextReference from '../text-reference';
 import TextInput from '../text-input';
+import Score from '../score';
 import {
   STATUSES,
   FINISH_TEST,
   UPDATE_CLOCK,
   UPDATE_CURRENT_POSITION,
   CHECK_ACCURACY,
+  UPDATE_SCORE,
 } from '../../reducers/typing-test.reducer';
+
+import './typing-test.scss';
 
 const parseClockDigit = (digit) => {
   return `${digit}`.length > 1 ? `${digit}` : `0${digit}`;
@@ -18,6 +23,10 @@ const handleOnChange = ([text, textArray], dispatch) => {
   const length = textArray.length;
   const currentWord = length - 1;
   const currentLetter = textArray[length - 1].length - 1;
+
+  dispatch({
+    type: UPDATE_SCORE,
+  });
 
   dispatch({
     type: CHECK_ACCURACY,
@@ -44,6 +53,7 @@ const TypingTest = (props) => {
     currentPositions,
     paragraphMap,
     accurancyByPosition,
+    score,
   } = state;
 
   const isFinished = () => {
@@ -70,6 +80,12 @@ const TypingTest = (props) => {
       return () => clearInterval(interval);
     }
 
+    if (status === STATUSES.FINISHED) {
+      dispatch({
+        type: UPDATE_SCORE,
+      });
+    }
+
     return () => {};
   }, [status]);
 
@@ -79,20 +95,31 @@ const TypingTest = (props) => {
 
 
   return (
-    <>
-      <div className="typing-test">
-        <span className="countdown">{clock}</span>
-        <TextReference
-          accurancyByPosition={accurancyByPosition}
-          paragraph={paragraphMap}
-          currentPositions={currentPositions}
-        />
-        <TextInput
-          onChange={(values) => handleOnChange(values, dispatch)}
-          disabled={isFinished()}
-        />
-      </div>
-    </>);
+    <Container>
+      <Row>
+        <Col></Col>
+        <Col md={6}>
+          <div className="typing-test">
+            <span className="countdown">{clock}</span>
+            <TextReference
+              accurancyByPosition={accurancyByPosition}
+              paragraph={paragraphMap}
+              currentPositions={currentPositions}
+            />
+            <TextInput
+              onChange={(values) => handleOnChange(values, dispatch)}
+              disabled={isFinished()}
+            />
+            <Score
+              isFinished={isFinished()}
+            >
+              {score}
+            </Score>
+          </div>
+        </Col>
+        <Col></Col>
+      </Row>
+    </Container>);
 };
 
 export default TypingTest;

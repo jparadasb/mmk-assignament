@@ -4,6 +4,7 @@ $electric-blue: hsla(185, 100%, 49%, 1);
 $outrageous-orange: hsla(13, 94%, 63%, 1);
 $maize-crayola: hsla(44, 94%, 63%, 1);
 $misty-rose: hsla(0, 100%, 95%, 1);
+$correct-answer-green: #27ae60;
 
 :root {
   --black-coral: #{$black-coral};
@@ -13,6 +14,8 @@ $misty-rose: hsla(0, 100%, 95%, 1);
   --outrageous-orange-darken-20: #{darken($outrageous-orange, 20%)};
   --maize-crayola: #{$maize-crayola};
   --misty-rose: #{$misty-rose};
+  --misty-rose-20: #{lighten($misty-rose, 20%)};
+  --correct-answer-green: #{$correct-answer-green};
 }
 
 body {
@@ -43,7 +46,8 @@ body {
 }
 
 .custom-button {
-  &_submit {
+  &_submit,
+  &_default {
     display: flex;
     align-items: center;
     cursor: pointer;
