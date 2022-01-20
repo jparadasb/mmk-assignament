@@ -1,6 +1,5 @@
 
-import {paragraph} from 'https://unpkg.com/txtgen/dist/txtgen.esm.js';
-
+import {paragraph} from 'txtgen/dist/txtgen.esm';
 export const SET_CONFIG = 'SET_CONFIG';
 export const FINISH_TEST = 'FINISH_TEST';
 export const UPDATE_CLOCK = 'UPDATE_CLOCK';
