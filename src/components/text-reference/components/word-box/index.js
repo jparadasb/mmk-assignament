@@ -12,7 +12,7 @@ const getStatusClass = (correct) => {
 const getPositionClass = (currentWordIndex, index) => {
   const distance = index - currentWordIndex;
 
-  if (distance < -2) {
+  if (distance < -1) {
     return 'typing_hide';
   }
 

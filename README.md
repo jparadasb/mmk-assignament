@@ -18,7 +18,7 @@ This application was built using React and follow the google style guideline
 
 ## to run e2e tests
 
-` yarn cypress:on`
+` yarn cypress:open`
 
 # Relevant directories
 

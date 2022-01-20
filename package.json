@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "serve:build": "serve -s build",
-    "cypress:open": "BROWSER=none FAST_REFRESH=false yarn start & cypress open",
+    "cypress:open": "BROWSER=none FAST_REFRESH=false yarn serve:build & cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

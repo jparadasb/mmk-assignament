@@ -11,6 +11,8 @@ import {
   UPDATE_CURRENT_POSITION,
   CHECK_ACCURACY,
   UPDATE_SCORE,
+  UPDATE_BPM,
+  UPDATE_LAST_EVENT_TIME,
 } from '../../reducers/typing-test.reducer';
 
 import './typing-test.scss';
@@ -19,12 +21,36 @@ const parseClockDigit = (digit) => {
   return `${digit}`.length > 1 ? `${digit}` : `0${digit}`;
 };
 
-const handleOnChange = ([text, textArray], baseParagraphLength, dispatch) => {
+const renderBPM = (bpmArray) => {
+  if (bpmArray.length) {
+    return `${Math.trunc(bpmArray[bpmArray.length - 1])} BPM`;
+  }
+
+  return null;
+};
+
+const handleOnChange = (
+    [text, textArray],
+    {paragraphMap, lastEventTime},
+    dispatch) => {
   const length = textArray.length;
   const currentWord = length - 1;
   const currentLetter = textArray[length - 1].length - 1;
+  const paragraphLength = paragraphMap?.length;
 
-  if (baseParagraphLength < length) {
+  if (lastEventTime) {
+    const now = new Date().getTime();
+    const bpm = (1000 / (now - lastEventTime)) * 60;
+
+    dispatch({type: UPDATE_BPM, payload: {
+      lastEventTime: now,
+      bpm,
+    }});
+  } else {
+    dispatch({type: UPDATE_LAST_EVENT_TIME});
+  }
+
+  if (paragraphLength < length) {
     dispatch({type: FINISH_TEST});
   }
 
@@ -57,10 +83,8 @@ const TypingTest = (props) => {
     currentPositions,
     paragraphMap,
     accurancyByPosition,
-    score,
+    bpmArray,
   } = state;
-
-  const paragraphLength = paragraphMap?.length;
 
   const isFinished = () => {
     return status === STATUSES.FINISHED;
@@ -101,10 +125,9 @@ const TypingTest = (props) => {
 
 
   return (
-    <Container>
+    <Container fluid>
       <Row>
-        <Col></Col>
-        <Col md={6}>
+        <Col md={12}>
           <div className="typing-test">
             <span className="countdown">{clock}</span>
             <TextReference
@@ -114,18 +137,18 @@ const TypingTest = (props) => {
             />
             <TextInput
               onChange={
-                (values) => handleOnChange(values, paragraphLength, dispatch)
+                (values) => handleOnChange(values, state, dispatch)
               }
               disabled={isFinished()}
             />
+            <span className="typing-test_bpm">
+              {renderBPM(bpmArray)}
+            </span>
             <Score
               isFinished={isFinished()}
-            >
-              {score}
-            </Score>
+            />
           </div>
         </Col>
-        <Col></Col>
       </Row>
     </Container>);
 };

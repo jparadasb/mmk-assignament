@@ -7,8 +7,8 @@ import {
 import './score.scss';
 
 
-const Score = ({children, isFinished}) => {
-  const {dispatch, state: {score}} = useTypingTest();
+const Score = ({isFinished}) => {
+  const {dispatch, state: {score, avgBpm}} = useTypingTest();
   if (!isFinished) {
     return null;
   }
@@ -24,7 +24,10 @@ const Score = ({children, isFinished}) => {
         We&apos;re done your score is
       </h1>
       <div className='score_text'>
-        {children}
+        {score}
+      </div>
+      <div className="bpm_text">
+        {Math.trunc(avgBpm || 0)} BPM
       </div>
       <div
         className="custom-button_default"
@@ -39,7 +42,6 @@ const Score = ({children, isFinished}) => {
 };
 
 Score.propTypes = {
-  children: PropTypes.string,
   isFinished: PropTypes.bool,
 };
 

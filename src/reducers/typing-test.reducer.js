@@ -7,6 +7,9 @@ export const UPDATE_CURRENT_POSITION = 'UPDATE_CURRENT_POSITION';
 export const CHECK_ACCURACY = 'CHECK_ACCURACY';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
 export const RESTART = 'RESTART';
+export const UPDATE_BPM = 'UPDATE_BPM';
+export const UPDATE_LAST_EVENT_TIME = 'UPDATE_LAST_EVENT_TIME';
+export const UPDATE_AVG_BPM = 'UPDATE_AVG_BPM';
 
 export const STATUSES = {
   STARTED: 'STARTED',
@@ -19,6 +22,9 @@ export const defaultState = {
   durationMinutes: null,
   durationMilliseconds: null,
   paragraph: '',
+  bpmArray: [],
+  lastEventTime: null,
+  avgBpm: 0,
   startTime: null,
   clock: '00:00',
   currentPositions: {
@@ -48,8 +54,45 @@ const initializeConfig = (durationMinutes) => {
   };
 };
 
+const getAverage = (numbers) => {
+  const length = numbers.length;
+  const total = numbers.reduce((acc, current) => {
+    return acc + current;
+  }, 0);
+
+  return total / length;
+};
+
 export default function typingTestReducer(state, action) {
   switch (action.type) {
+    case UPDATE_LAST_EVENT_TIME: {
+      return {
+        ...state,
+        lastEventTime: new Date().getTime(),
+      };
+    }
+    case UPDATE_AVG_BPM: {
+      return {
+        avgBpm: getAverage(state.bpmArray),
+      };
+    }
+    case UPDATE_BPM: {
+      const {bpm, lastEventTime} = action.payload;
+      if (state.bpmArray.length > 20) {
+        const avgBpm = getAverage(state.bpmArray);
+        return {
+          ...state,
+          bpmArray: [avgBpm, bpm],
+          avgBpm,
+          lastEventTime,
+        };
+      }
+      return {
+        ...state,
+        bpmArray: [...state.bpmArray, bpm],
+        lastEventTime,
+      };
+    }
     case RESTART: {
       return defaultState;
     }
@@ -103,6 +146,7 @@ export default function typingTestReducer(state, action) {
     case FINISH_TEST: {
       return {
         ...state,
+        avgBpm: getAverage(state.bpmArray),
         status: STATUSES.FINISHED,
       };
     }

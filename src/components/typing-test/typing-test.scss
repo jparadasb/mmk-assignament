@@ -8,6 +8,11 @@
     width: 100%;
     font-size: 4em;
   }
+
+  &_bpm {
+    padding-top: 1em;
+    font-size: 3rem;
+  }
 }
 
 .typing_hide {
@@ -28,16 +33,18 @@
 }
 
 .countdown {
-  font-size: 8em;
+  font-size: 4rem;
 }
 
 .word-active {
-  font-size: 4em;
+  font-size: 3rem;
 }
 
 .text-reference {
   &_container {
     font-size: 2em;
+    width: 100%;
+    overflow: auto;
   }
 }
 
