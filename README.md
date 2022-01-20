@@ -4,6 +4,8 @@
 
 This application was built using React and follow the google style guideline
 
+[https://typing-test.gh.paradas.co/](https://typing-test.gh.paradas.co/).
+
 # Getting started
 
 ## To run the project
