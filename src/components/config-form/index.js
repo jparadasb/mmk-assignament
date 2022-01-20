@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Container, Row, Col} from 'react-bootstrap';
 import {useTypingTest} from '../../context/typing-test.context';
@@ -23,11 +23,19 @@ ErrorMessage.propTypes = {
 
 const ConfigForm = (props) => {
   const {state, dispatch} = useTypingTest();
+  const inputRef = useRef(null);
+
   const [error, setError] = useState('');
 
   const {status} = state;
 
   const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    inputRef.current.focus();
+    return () => {};
+  }, [inputRef]);
+
   const handleDuration = (event) => {
     setDuration(event.target.value);
   };
@@ -60,6 +68,7 @@ const ConfigForm = (props) => {
               <label className="custom-input_label">
                 <Fa icon={faClock} />
                 <input
+                  ref={inputRef}
                   className="custom-input_number"
                   type="number"
                   list="duration"

@@ -19,10 +19,14 @@ const parseClockDigit = (digit) => {
   return `${digit}`.length > 1 ? `${digit}` : `0${digit}`;
 };
 
-const handleOnChange = ([text, textArray], dispatch) => {
+const handleOnChange = ([text, textArray], baseParagraphLength, dispatch) => {
   const length = textArray.length;
   const currentWord = length - 1;
   const currentLetter = textArray[length - 1].length - 1;
+
+  if (baseParagraphLength < length) {
+    dispatch({type: FINISH_TEST});
+  }
 
   dispatch({
     type: UPDATE_SCORE,
@@ -55,6 +59,8 @@ const TypingTest = (props) => {
     accurancyByPosition,
     score,
   } = state;
+
+  const paragraphLength = paragraphMap?.length;
 
   const isFinished = () => {
     return status === STATUSES.FINISHED;
@@ -107,7 +113,9 @@ const TypingTest = (props) => {
               currentPositions={currentPositions}
             />
             <TextInput
-              onChange={(values) => handleOnChange(values, dispatch)}
+              onChange={
+                (values) => handleOnChange(values, paragraphLength, dispatch)
+              }
               disabled={isFinished()}
             />
             <Score

@@ -8,14 +8,18 @@ import './score.scss';
 
 
 const Score = ({children, isFinished}) => {
-  const {dispatch} = useTypingTest();
+  const {dispatch, state: {score}} = useTypingTest();
   if (!isFinished) {
     return null;
   }
 
+  const gifUrl = score > 0 ?
+  'https://media.giphy.com/media/NEvPzZ8bd1V4Y/giphy.gif' :
+  'https://media.giphy.com/media/DvyLQztQwmyAM/giphy.gif';
+
   return (
     <div className="score">
-      <img src="https://media.giphy.com/media/NEvPzZ8bd1V4Y/giphy.gif" alt="" />
+      <img src={gifUrl} alt="" />
       <h1>
         We&apos;re done your score is
       </h1>
