@@ -1,3 +1,5 @@
+![example workflow](https://github.com/jparadasb/mmk-assignament/actions/workflows/cypress.yml/badge.svg)
+
 # Typing Skill Checker in React App
 
 This application was built using React and follow the google style guideline
