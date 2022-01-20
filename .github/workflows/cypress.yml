@@ -17,13 +17,6 @@ jobs:
       - run: yarn
       - run: yarn build
 
-      - name: Save build folder
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          if-no-files-found: error
-          path: build
-
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
@@ -35,20 +28,12 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
-
-      - uses: actions/download-artifact@v2
-        with:
-          name: build
-          path: build
+      - run: yarn
+      - run: yarn build
 
       - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: build
-
-      # - name: Deploy 🚀
-      #   uses: JamesIves/github-pages-deploy-action@v4.2.2
-      #   with:
-      #     branch: gh-pages
-      #     folder: build
+          force_orphan: true
