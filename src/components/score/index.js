@@ -1,5 +1,12 @@
 import PropTypes from 'prop-types';
 import {useTypingTest} from '../../context/typing-test.context';
+import {FontAwesomeIcon as Fa} from '@fortawesome/react-fontawesome';
+import {
+  faInstagram,
+  faLinkedin,
+  faGithub,
+} from '@fortawesome/free-brands-svg-icons';
+
 import {
   RESTART,
 } from '../../reducers/typing-test.reducer';
@@ -36,6 +43,26 @@ const Score = ({isFinished}) => {
         <span>
           Restart
         </span>
+      </div>
+      <div className="social-links">
+        <a
+          href="https://github.com/jparadasb/mmk-assignment"
+          target="_blank" rel="noreferrer"
+        >
+          <Fa icon={faGithub} size='lg'/>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/jparadasb/"
+          target="_blank" rel="noreferrer"
+        >
+          <Fa icon={faLinkedin} size='lg'/>
+        </a>
+        <a
+          href="https://www.instagram.com/v1nceent/"
+          target="_blank" rel="noreferrer"
+        >
+          <Fa icon={faInstagram} size='lg'/>
+        </a>
       </div>
     </div>
   );

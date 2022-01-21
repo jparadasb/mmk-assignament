@@ -125,7 +125,7 @@ const TypingTest = (props) => {
 
 
   return (
-    <Container fluid>
+    <Container>
       <Row>
         <Col md={12}>
           <div className="typing-test">
