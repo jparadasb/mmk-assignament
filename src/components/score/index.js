@@ -30,12 +30,12 @@ const Score = ({isFinished}) => {
       <h1>
         We&apos;re done your score is
       </h1>
+      <h3>
+        This score is calculated based on the number of right words typed
+      </h3>
       <div className='score_text'>
         {score}
       </div>
-      <h2>
-        This score is calculated based on the number of right word typed
-      </h2>
       <div className="bpm_text">
         {Math.trunc(avgBpm || 0)} BPM
       </div>
